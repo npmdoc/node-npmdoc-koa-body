@@ -1,0 +1,200 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/dlau/koa-body#readme">koa-body (v1.6.0)</a>
+</h1>
+<h4>A koa body parser middleware. Support multipart, urlencoded and json request bodies.</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.koa-body">module koa-body</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.koa-body.koa-body">
+            function <span class="apidocSignatureSpan"></span>koa-body
+            <span class="apidocSignatureSpan">(opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.koa-body.toString">
+            function <span class="apidocSignatureSpan">koa-body.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.koa-body.toString">module koa-body.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.koa-body.toString.toString">
+            function <span class="apidocSignatureSpan">koa-body.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.koa-body" id="apidoc.module.koa-body">module koa-body</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.koa-body.koa-body" id="apidoc.element.koa-body.koa-body">
+        function <span class="apidocSignatureSpan"></span>koa-body
+        <span class="apidocSignatureSpan">(opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function requestbody(opts) {
+  opts = opts || {};
+  opts.onError = 'onError' in opts ? opts.onError : false;
+  opts.patchNode = 'patchNode' in opts ? opts.patchNode : false;
+  opts.patchKoa  = 'patchKoa'  in opts ? opts.patchKoa  : true;
+  opts.multipart = 'multipart' in opts ? opts.multipart : false;
+  opts.urlencoded = 'urlencoded' in opts ? opts.urlencoded : true;
+  opts.json = 'json' in opts ? opts.json : true;
+  opts.text = 'text' in opts ? opts.text : true;
+  opts.encoding  = 'encoding'  in opts ? opts.encoding  : 'utf-8';
+  opts.jsonLimit = 'jsonLimit' in opts ? opts.jsonLimit : '1mb';
+  opts.formLimit = 'formLimit' in opts ? opts.formLimit : '56kb';
+  opts.formidable = 'formidable' in opts ? opts.formidable : {};
+  opts.textLimit = 'textLimit' in opts ? opts.textLimit : '56kb';
+  opts.strict = 'strict' in opts ? opts.strict : true;
+
+  return function *(next){
+    var body = {};
+    // so don't parse the body in strict mode
+    if (!opts.strict || ["GET", "HEAD", "DELETE"].indexOf(this.method.toUpperCase()) === -1) {
+      try {
+        if (opts.json &amp;&amp; this.is('json'))  {
+          body = yield buddy.json(this, {encoding: opts.encoding, limit: opts.jsonLimit});
+        }
+        else if (opts.urlencoded &amp;&amp; this.is('urlencoded')) {
+          body = yield buddy.form(this, {encoding: opts.encoding, limit: opts.formLimit});
+        }
+        else if (opts.text &amp;&amp; this.is('text')) {
+          body = yield buddy.text(this, {encoding: opts.encoding, limit: opts.textLimit});
+        }
+        else if (opts.multipart &amp;&amp; this.is('multipart')) {
+          body = yield formy(this, opts.formidable);
+        }
+
+      } catch(parsingError) {
+        if (typeof(opts.onError) === 'function') {
+          opts.onError(parsingError, this);
+        } else {
+          throw parsingError;
+        }
+      }
+    }
+
+    if (opts.patchNode) {
+      this.req.body = body;
+    }
+    if (opts.patchKoa) {
+      this.request.body = body;
+    }
+    yield next;
+  };
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.koa-body.toString" id="apidoc.element.koa-body.toString">
+        function <span class="apidocSignatureSpan">koa-body.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.koa-body.toString" id="apidoc.module.koa-body.toString">module koa-body.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.koa-body.toString.toString" id="apidoc.element.koa-body.toString.toString">
+        function <span class="apidocSignatureSpan">koa-body.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
