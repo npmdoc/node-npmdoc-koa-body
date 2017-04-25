@@ -1,4 +1,7 @@
-# api documentation for  [koa-body (v1.6.0)](https://github.com/dlau/koa-body#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-koa-body.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-koa-body) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-koa-body.svg)](https://travis-ci.org/npmdoc/node-npmdoc-koa-body)
+# npmdoc-koa-body
+
+#### basic api documentation for  [koa-body (v1.6.0)](https://github.com/dlau/koa-body#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-koa-body.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-koa-body) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-koa-body.svg)](https://travis-ci.org/npmdoc/node-npmdoc-koa-body)
+
 #### A koa body parser middleware. Support multipart, urlencoded and json request bodies.
 
 [![NPM](https://nodei.co/npm/koa-body.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/koa-body)
@@ -96,7 +99,8 @@
         "examples-multer": "node --harmony examples/multer.js",
         "test": "mocha --harmony"
     },
-    "version": "1.6.0"
+    "version": "1.6.0",
+    "bin": {}
 }
 ```
 
